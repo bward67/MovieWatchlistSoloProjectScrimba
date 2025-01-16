@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>My Watchlist</title>
+  </head>
+  <body>
+    <header>
+      <div class="content container">
+        <h1>My Watchlist</h1>
+        <a href="index.html" class="my-watchlist">Search for movies</a>
+      </div>
+    </header>
+
+    <section class="container card">
+      <img src="images/image 33.png" alt="cover of movie" />
+      <div class="movie-content">
+        <div class="movie-title-container">
+          <h2>Blade Runner</h2>
+          <img src="images/StarIcon.png" alt="star icon" class="star-icon" />
+          <p class="rating">8.1</p>
+        </div>
+        <div class="small-line">
+          <p>117 min</p>
+          <p>Action, Drama, Sci-fi</p>
+
+          <button class="remove-btn" id="remove-btn">
+            <img src="images/removeIcon.png" alt="delete icon" />
+            <p>Remove</p>
+          </button>
+        </div>
+        <p class="movie-desc">
+          A blade runner must pursue and terminate four replicants who stole a
+          ship in space, and have returned to Earth to find their creator.
+        </p>
+      </div>
+    </section>
+  </body>
+  <script src="app.js"></script>
+</html>

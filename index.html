@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <title>Movie Watchlist</title>
+  </head>
+  <body>
+    <main>
+      <header>
+        <div class="content container">
+          <h1>Find your film</h1>
+          <a href="watchlist.html" class="my-watchlist">My Watchlist</a>
+        </div>
+      </header>
+
+      <form id="form">
+        <div class="input-container container">
+          <img
+            src="images/Icon.png"
+            alt="magnifying glass icon"
+            class="search-icon"
+          />
+          <input
+            type="text"
+            id="search"
+            placeholder="Search here"
+            aria-label="search"
+            name="search"
+          />
+        </div>
+        <button class="search-btn" id="search-btn">Search</button>
+      </form>
+
+      <section class="cards" id="cards">
+        <!-- we will add this dynamically in JS -->
+        <section class="container card" id="card">
+          <img src="images/image 33.png" alt="cover of movie" class="poster" />
+
+          <div class="movie-content">
+            <div class="movie-title-container">
+              <h2>Blade Runner</h2>
+              <img
+                src="images/StarIcon.png"
+                alt="star icon"
+                class="star-icon"
+              />
+              <p class="rating">8.1</p>
+            </div>
+            <div class="small-line">
+              <p>117 min</p>
+              <p>Action, Drama, Sci-fi</p>
+
+              <button class="add-btn" id="add-btn">
+                <img src="images/AddIcon.png" alt="add icon" />
+                <p>Watchlist</p>
+              </button>
+            </div>
+            <p class="movie-desc">
+              A blade runner must pursue and terminate four replicants who stole
+              a ship in space, and have returned to Earth to find their creator.
+            </p>
+          </div>
+        </section>
+      </section>
+
+      <section class="no-search-found" id="no-search-found">
+        <h3>
+          Unable to find what you're looking for. Please try another search.
+        </h3>
+      </section>
+    </main>
+  </body>
+  <script src="app.js"></script>
+</html>
