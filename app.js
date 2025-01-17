@@ -68,11 +68,12 @@ async function renderMovies() {
             ${data.Plot}
           </p>
         </div> </section>`;
+
+    function handleAddBtn() {
+      console.log("you clicked add btn");
+    }
   }
   cards.innerHTML = htmlStr;
-  function handleAddBtn() {
-    console.log("you clicked add btn");
-  }
 }
 
 //!   ---------- OTHER FUNCTIONS ----------
