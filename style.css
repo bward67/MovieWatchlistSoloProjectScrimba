@@ -130,7 +130,7 @@ input::placeholder {
   gap: 2em;
   font-size: 0.75rem;
   color: #111827;
-  margin: 0.688em 0.5em;
+  margin-block: 0.688em;
 }
 .rating {
   font-size: 0.75rem;
