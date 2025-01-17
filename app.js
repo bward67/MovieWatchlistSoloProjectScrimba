@@ -21,7 +21,7 @@ async function handleSearch() {
   //and when watchlist.html loads we must get from local storage
 
   const res = await fetch(
-    `http://www.omdbapi.com/?apikey=77c31f07&s=${inputValue}`
+    `https://www.omdbapi.com/?apikey=77c31f07&s=${inputValue}`
   );
   const data = await res.json();
   //console.log(data.Search); // this works
@@ -35,7 +35,7 @@ async function renderMovies() {
   let htmlStr = "";
   for (let movie of movieArray) {
     const res = await fetch(
-      `http://www.omdbapi.com/?apikey=77c31f07&i=${movie.imdbID}`
+      `https://www.omdbapi.com/?apikey=77c31f07&i=${movie.imdbID}`
     );
     const data = await res.json();
 
