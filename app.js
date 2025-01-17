@@ -1,5 +1,6 @@
 const form = document.getElementById("form");
 const cards = document.getElementById("cards");
+const noSearchFound = document.getElementById("no-search-found");
 
 let movieArray = [];
 let movieIdDetails = [];
@@ -25,11 +26,15 @@ async function handleSearch() {
   );
   const data = await res.json();
   //console.log(data.Search); // this works
-
-  movieArray = data.Search;
-  console.log(movieArray);
-  renderMovies();
-  input.value = "";
+  if (data.Response === "True") {
+    movieArray = data.Search;
+    console.log(movieArray);
+    renderMovies();
+    input.value = "";
+    // input.value = "sorry it is taking ages to load";
+  } else {
+    noSearchFound.style.display = "block";
+  }
 }
 
 async function renderMovies() {
@@ -65,11 +70,11 @@ async function renderMovies() {
         </div> </section>`;
   }
   cards.innerHTML = htmlStr;
+  function handleAddBtn() {
+    console.log("you clicked add btn");
+  }
 }
 
 //!   ---------- OTHER FUNCTIONS ----------
 
-function handleAddBtn() {
-  console.log("you clicked add btn");
-}
 //"http://www.omdbapi.com/?i=tt1630029&apikey=1e2e1a57"

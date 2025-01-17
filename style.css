@@ -95,6 +95,7 @@ button {
 input {
   border: none;
   padding-left: 1em;
+  width: 100%;
 }
 input::placeholder {
   color: #6b7280;
