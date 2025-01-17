@@ -29,6 +29,7 @@ async function handleSearch() {
   movieArray = data.Search;
   console.log(movieArray);
   renderMovies();
+  input.value = "";
 }
 
 async function renderMovies() {

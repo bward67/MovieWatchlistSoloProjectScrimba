@@ -9,8 +9,11 @@ body {
   font-family: "Inter", serif;
   max-width: 550px;
   font-weight: 400;
-  display: grid;
-  place-items: center;
+  margin: 0 auto;
+  /* display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center; */
 }
 img {
   max-width: 100%;
