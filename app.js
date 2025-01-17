@@ -25,7 +25,7 @@ async function handleSearch() {
     `https://www.omdbapi.com/?apikey=77c31f07&s=${inputValue}`
   );
   const data = await res.json();
-  //console.log(data.Search); // this works
+  // console.log(data.Response); // this works
   if (data.Response === "True") {
     movieArray = data.Search;
     console.log(movieArray);
@@ -59,7 +59,7 @@ async function renderMovies() {
             <p>${data.Runtime}</p>
             <p>${data.Genre}</p>
 
-            <button class="add-btn" id=${data.imdbID}  onclick=${handleAddBtn}>
+            <button class="add-btn" id=${data.imdbID}  onclick="handleAddBtn()">
               <img src="images/AddIcon.png" alt="add icon"  />
               <p>Watchlist</p>
             </button>
@@ -68,13 +68,15 @@ async function renderMovies() {
             ${data.Plot}
           </p>
         </div> </section>`;
-
-    function handleAddBtn() {
-      console.log("you clicked add btn");
-    }
   }
   cards.innerHTML = htmlStr;
 }
+
+function handleAddBtn() {
+  console.log("you clicked add btn");
+}
+//I must filter through the movies array and if the movieID that we are looping thru === the movieID of the btn we click on we must setItem to localStorage and name a key value pair
+//and we will getItem on the watchlist page
 
 //!   ---------- OTHER FUNCTIONS ----------
 
