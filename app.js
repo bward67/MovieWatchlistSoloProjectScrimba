@@ -35,7 +35,7 @@ async function handleSearch() {
     //! I must make this input.value msg stop when the fetch comes in
     setTimeout(function () {
       input.value = "";
-    }, 50000);
+    }, 10000);
     noSearchFound.style.display = "none";
   } else {
     noSearchFound.style.display = "block";
