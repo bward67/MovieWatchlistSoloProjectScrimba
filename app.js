@@ -4,6 +4,7 @@ const noSearchFound = document.getElementById("no-search-found");
 
 let movieArray = [];
 let movieIdDetails = [];
+let filteredArray = [];
 
 //!   ---------- EVENT LISTENERS ----------
 
@@ -28,10 +29,14 @@ async function handleSearch() {
   // console.log(data.Response); // this works
   if (data.Response === "True") {
     movieArray = data.Search;
-    console.log(movieArray);
+    //console.log(movieArray);
     renderMovies();
-    input.value = "";
-    // input.value = "sorry it is taking ages to load";
+    input.value = "We are searching for you...";
+    //! I must make this input.value msg stop when the fetch comes in
+    setTimeout(function () {
+      input.value = "";
+    }, 50000);
+    noSearchFound.style.display = "none";
   } else {
     noSearchFound.style.display = "block";
   }
@@ -48,7 +53,7 @@ async function renderMovies() {
     movieIdDetails.push(data);
     //console.log(movieIdDetails);
 
-    htmlStr += ` <section class="container card" id="card"> <img src=${data.Poster} alt="poster of ${movie.Title}" class="poster" />
+    htmlStr += ` <div class="container card" id="card"> <img src=${data.Poster} alt="poster of ${movie.Title}" class="poster" />
         <div class="movie-content">
           <div class="movie-title-container">
             <h2>${data.Title}</h2>
@@ -59,7 +64,7 @@ async function renderMovies() {
             <p>${data.Runtime}</p>
             <p>${data.Genre}</p>
 
-            <button class="add-btn" id=${data.imdbID}  onclick="handleAddBtn()">
+            <button class="add-btn" id=${data.imdbID}  onclick="handleAddBtn(${data.imdbID})">
               <img src="images/AddIcon.png" alt="add icon"  />
               <p>Watchlist</p>
             </button>
@@ -67,16 +72,30 @@ async function renderMovies() {
           <p class="movie-desc">
             ${data.Plot}
           </p>
-        </div> </section>`;
+        </div> </div>`;
   }
   cards.innerHTML = htmlStr;
 }
 
-function handleAddBtn() {
-  console.log("you clicked add btn");
+function handleAddBtn(id) {
+  //console.log(id.id);
+  //console.log(movieIdDetails);
+
+  movieIdDetails.filter((movie) => {
+    //so that if the user clicks the add btn twice for 1 movie we don't get duplicates
+    if (!filteredArray.includes(movie)) {
+      if (movie.imdbID === id.id) {
+        filteredArray.unshift(movie);
+        localStorage.setItem(
+          "myWatchlistMovies",
+          JSON.stringify(filteredArray)
+        );
+      }
+    }
+  });
+  //! BIG PROBLEM - when I go into my watchlist page and then back to the search page to add more my Fav's I removes all the previous movies that I choose - WHY?? I put them into local storage so why doesn't it save them???
+  //console.log(filteredArray);
 }
-//I must filter through the movies array and if the movieID that we are looping thru === the movieID of the btn we click on we must setItem to localStorage and name a key value pair
-//and we will getItem on the watchlist page
 
 //!   ---------- OTHER FUNCTIONS ----------
 

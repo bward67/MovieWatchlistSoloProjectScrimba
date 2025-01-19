@@ -30,6 +30,11 @@ h2 {
   font-size: 1.125rem;
   font-weight: 500;
 }
+h3 {
+  color: #dfdddd;
+  font-size: 1.125rem;
+  font-weight: 700;
+}
 /* index.html */
 .container {
   width: 90%;
@@ -161,3 +166,18 @@ input::placeholder {
 }
 
 /* watchlist.html */
+
+.add-line {
+  display: flex;
+  gap: 0.5em;
+  color: #363636;
+  font-size: 0.875em;
+  font-weight: 700;
+  margin-top: 0.9375em;
+}
+.add-search-found {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 8em;
+}

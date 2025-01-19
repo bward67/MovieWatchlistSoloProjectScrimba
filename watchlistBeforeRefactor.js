@@ -68,7 +68,6 @@ function handleRemove(id) {
 
   let myWatchlistHtml = "";
 
-  //! I want to keep all movies in the moviesArray EXCEPT the movie that the user clicked on
   moviesArray = moviesArray.filter((movie) => movie.imdbID !== id.id);
   //console.log(moviesArray);
 
