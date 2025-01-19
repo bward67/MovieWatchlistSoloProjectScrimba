@@ -19,9 +19,6 @@ async function handleSearch() {
   const inputValue = input.value;
   //console.log(inputValue);
 
-  //then we must set local storage
-  //and when watchlist.html loads we must get from local storage
-
   const res = await fetch(
     `https://www.omdbapi.com/?apikey=77c31f07&s=${inputValue}`
   );
@@ -38,7 +35,10 @@ async function handleSearch() {
     }, 10000);
     noSearchFound.style.display = "none";
   } else {
+    // I must remove any movies that may be displayed here however I want them to remain in the moviesArray
+    // cards.innerHTML = "";
     noSearchFound.style.display = "block";
+    input.value = "";
   }
 }
 
@@ -83,6 +83,7 @@ function handleAddBtn(id) {
 
   movieIdDetails.filter((movie) => {
     //so that if the user clicks the add btn twice for 1 movie we don't get duplicates
+    // and I want the last movie the user clicks on to appear at the top
     if (!filteredArray.includes(movie)) {
       if (movie.imdbID === id.id) {
         filteredArray.unshift(movie);
@@ -93,10 +94,11 @@ function handleAddBtn(id) {
       }
     }
   });
-  //! BIG PROBLEM - when I go into my watchlist page and then back to the search page to add more my Fav's I removes all the previous movies that I choose - WHY?? I put them into local storage so why doesn't it save them???
-  //console.log(filteredArray);
 }
 
-//!   ---------- OTHER FUNCTIONS ----------
-
-//"http://www.omdbapi.com/?i=tt1630029&apikey=1e2e1a57"
+//! BIG PROBLEM: if a user goes from My watchlist back to search - searches for something and adds it to my watchlist it doesn't retain any of the past movies they saved - it's like it starts a new moviesArray
+//? yet if the user just moves from my watchlist to the search page WITHOUT searching a new movie and adding it to the my watchlist it retains the saved/added movies
+//! and yet if the user searches for something that is not found they get the: search not found message and if they go back to my watchlist it HAS retained the past saved/added movies
+//? which means it is not removing the saved movies when the user types into the input field or else it would remove them even when we search for something which is not found
+//! it's a head scratcher
+//? and sometimes when I go back to My watchlist and there is a movie saved there the message about you have nothing shows up under the movie that has been saved
