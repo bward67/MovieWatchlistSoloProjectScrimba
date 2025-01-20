@@ -30,6 +30,7 @@ async function handleSearch() {
 
     input.value = "Please wait while we search ...";
     //! I must make this input.value msg stop when the fetch comes in - I tried it using try, catch & finally but could not get it to work - but I will eventually :)
+    noSearchFound.style.display = "none";
     renderMovies();
     setTimeout(function () {
       input.value = "";
@@ -89,7 +90,6 @@ function handleAddBtn(id) {
     if (!filteredArray.includes(movie)) {
       if (movie.imdbID === id.id) {
         filteredArray.unshift(movie);
-
         localStorage.setItem(
           "myWatchlistMovies",
           JSON.stringify(filteredArray)
