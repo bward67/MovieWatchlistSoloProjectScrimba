@@ -2,13 +2,13 @@ const watchlistCard = document.getElementById("watchlist-card");
 const addSearchFound = document.getElementById("add-search-found");
 const addSearchBtn = document.getElementById("add-icon-search");
 
-let moviesArray = [];
+let filteredArray = [];
 
 //!  ------------  EVENT LISTENERS  ------------
 document.addEventListener("DOMContentLoaded", function () {
-  //   console.log(moviesArray);
+  //   console.log(filteredArray);
   renderMyWatchlist();
-  //console.log(moviesArray);
+  //console.log(filteredArray);
   renderOrNot();
 });
 
@@ -19,24 +19,24 @@ addSearchBtn.addEventListener("click", function () {
 
 //!  ------------  FUNCTIONS  ------------
 function renderOrNot() {
-  if (moviesArray.length > 1) {
+  if (filteredArray.length > 0) {
     // console.log("show us the movies!");
-    // console.log(moviesArray);
+    // console.log(filteredArray);
     renderMyWatchlist();
   } else {
     addSearchFound.style.display = "flex";
-    //console.log("you have no movies selected");
   }
 }
 
 function renderMyWatchlist() {
   let myWatchlistHtml = "";
 
+  //! I think this may be where the problem is as it should be an array and NOT an object which comes back from localStorage
   movieObject = JSON.parse(localStorage.getItem("myWatchlistMovies"));
-  moviesArray = [...movieObject];
-  //console.log(moviesArray);
+  filteredArray = [...movieObject];
+  console.log({ movieObject, filteredArray });
 
-  for (let movie of moviesArray) {
+  for (let movie of filteredArray) {
     myWatchlistHtml += ` <div class="container card watchlist-card">
         <img src=${movie.Poster} alt="cover of${movie.Title}"  class="poster"/>
         <div class="movie-content">
@@ -64,21 +64,18 @@ function renderMyWatchlist() {
 }
 
 function handleRemove(id) {
-  //console.log(moviesArray);
-
   let myWatchlistHtml = "";
+  //! instead of using localStorage.removeItem I will filter the filteredArray to keep all movies in the filteredArray EXCEPT the movie that the user clicked on
+  filteredArray = filteredArray.filter((movie) => movie.imdbID !== id.id);
+  //console.log(filteredArray);
 
-  //! I want to keep all movies in the moviesArray EXCEPT the movie that the user clicked on
-  moviesArray = moviesArray.filter((movie) => movie.imdbID !== id.id);
-  //console.log(moviesArray);
-
-  if (moviesArray.length < 1) {
+  if (filteredArray.length < 1) {
     localStorage.clear();
     addSearchFound.style.display = "flex";
   }
 
-  localStorage.setItem("myWatchlistMovies", JSON.stringify(moviesArray));
-  for (let movie of moviesArray) {
+  //   localStorage.setItem("myWatchlistMovies", JSON.stringify(moviesArray));
+  for (let movie of filteredArray) {
     myWatchlistHtml += ` <div class="container card watchlist-card">
         <img src=${movie.Poster} alt="cover of${movie.Title}"  class="poster"/>
         <div class="movie-content">
@@ -106,5 +103,3 @@ function handleRemove(id) {
   //   console.log(id.id);
   //   console.log("You clicked Remove btn");
 }
-
-// }
