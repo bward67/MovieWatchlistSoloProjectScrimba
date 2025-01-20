@@ -81,8 +81,14 @@ async function renderMovies() {
 }
 
 function handleAddBtn(id) {
+  //! MAYBE THIS WILL FIX MY PROBLEM?????
+  movieObject = JSON.parse(localStorage.getItem("myWatchlistMovies"));
+  filteredArray = [...movieObject];
+  console.log({ movieObject, filteredArray });
+
   //console.log(id.id);
-  //console.log(movieIdDetails);
+  console.log(movieIdDetails);
+  console.log(filteredArray);
 
   movieIdDetails.filter((movie) => {
     //so that if the user clicks the add btn twice for 1 movie we don't get duplicates
@@ -90,6 +96,7 @@ function handleAddBtn(id) {
     if (!filteredArray.includes(movie)) {
       if (movie.imdbID === id.id) {
         filteredArray.unshift(movie);
+        //console.log(filteredArray);
         localStorage.setItem(
           "myWatchlistMovies",
           JSON.stringify(filteredArray)
@@ -97,6 +104,7 @@ function handleAddBtn(id) {
       }
     }
   });
+  console.log(filteredArray);
 }
 
 //? ISSUES TO BE FIXED...
