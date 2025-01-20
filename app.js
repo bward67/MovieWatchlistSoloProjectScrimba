@@ -80,12 +80,12 @@ async function renderMovies() {
   cards.innerHTML = htmlStr;
 }
 
-function handleAddBtn(id) {
-  //! MAYBE THIS WILL FIX MY PROBLEM?????
-  movieObject = JSON.parse(localStorage.getItem("myWatchlistMovies"));
-  filteredArray = [...movieObject];
-  console.log({ movieObject, filteredArray });
+//! MAYBE THIS WILL FIX MY PROBLEM?????  BUT WHERE CAN I PUT IT?
+// movieObject = JSON.parse(localStorage.getItem("myWatchlistMovies"));
+// filteredArray = [...movieObject];
+// console.log({ movieObject, filteredArray });
 
+function handleAddBtn(id) {
   //console.log(id.id);
   console.log(movieIdDetails);
   console.log(filteredArray);
@@ -97,6 +97,7 @@ function handleAddBtn(id) {
       if (movie.imdbID === id.id) {
         filteredArray.unshift(movie);
         //console.log(filteredArray);
+
         localStorage.setItem(
           "myWatchlistMovies",
           JSON.stringify(filteredArray)
