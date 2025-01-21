@@ -97,6 +97,8 @@ function handleAddBtn(btn) {
     const existInWatchlist = filteredArray.find(
       (movie) => movie?.imdbID === btn.id
     );
+    console.log(existInWatchlist);
+
     //? The ?. is the optional chaining operator, which ensures that if movie is null or undefined, the code won't throw an error, and it will just return undefined instead of trying to access imdbID on a null or undefined value.
 
     //if it does exist in my watchlist remove it from the filteredArray
