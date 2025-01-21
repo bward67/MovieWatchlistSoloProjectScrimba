@@ -53,6 +53,7 @@ async function renderMovies() {
     const data = await res.json();
 
     movieIdDetails.push(data);
+    console.log({ movieIdDetails });
 
     //console.log(movieIdDetails);
 
@@ -85,24 +86,39 @@ async function renderMovies() {
 // filteredArray = [...movieObject];
 // console.log({ movieObject, filteredArray });
 
-function handleAddBtn(id) {
-  //console.log(id.id);
-  console.log(movieIdDetails);
-  console.log(filteredArray);
+// renamed the param to btn instead of id, as what is return is a button element
+function handleAddBtn(btn) {
+  // get the previously stored movies or an empty array
+  const previousMovies = JSON.parse(
+    localStorage.getItem("myWatchlistMovies") || "[]"
+  );
+  filteredArray = previousMovies;
 
-  movieIdDetails.filter((movie) => {
+  // use map method instead of reduce method
+  movieIdDetails.map((movie) => {
     //so that if the user clicks the add btn twice for 1 movie we don't get duplicates
     // and I want the last movie the user clicks on to appear at the top
-    if (!filteredArray.includes(movie)) {
-      if (movie.imdbID === id.id) {
-        filteredArray.unshift(movie);
-        //console.log(filteredArray);
 
-        localStorage.setItem(
-          "myWatchlistMovies",
-          JSON.stringify(filteredArray)
-        );
-      }
+    /**
+     * In other to check for duplicates
+     * First check if the movie exists in watchlist
+     */
+    const existInWatchlist = filteredArray.find(
+      (filteredMovie) => filteredMovie?.imdbID === btn.id
+    );
+
+    // if it exist, remove it from the array
+    if (existInWatchlist) {
+      filteredArray = filteredArray.filter(
+        (filteredMovie) => filteredMovie?.imdbID !== btn.id
+      );
+    }
+
+    // then add the movie as usual
+    if (movie.imdbID === btn.id) {
+      filteredArray.unshift(movie);
+      //console.log(filteredArray);
+      localStorage.setItem("myWatchlistMovies", JSON.stringify(filteredArray));
     }
   });
   console.log(filteredArray);

@@ -7,7 +7,7 @@ let filteredArray = [];
 //!  ------------  EVENT LISTENERS  ------------
 document.addEventListener("DOMContentLoaded", function () {
   //   console.log(filteredArray);
-  renderMyWatchlist();
+  // renderMyWatchlist();
   //console.log(filteredArray);
   renderOrNot();
 });
@@ -19,6 +19,9 @@ addSearchBtn.addEventListener("click", function () {
 
 //!  ------------  FUNCTIONS  ------------
 function renderOrNot() {
+  // specify the default value of the movieObject to an empty array in case the localStorage is empty
+  movieObject = JSON.parse(localStorage.getItem("myWatchlistMovies") || "[]");
+  filteredArray = [...movieObject];
   if (filteredArray.length > 0) {
     // console.log("show us the movies!");
     // console.log(filteredArray);
@@ -32,9 +35,8 @@ function renderMyWatchlist() {
   let myWatchlistHtml = "";
 
   //! I think this may be where the problem is as it should be an array and NOT an object which comes back from localStorage
-  movieObject = JSON.parse(localStorage.getItem("myWatchlistMovies"));
-  filteredArray = [...movieObject];
-  console.log({ movieObject, filteredArray });
+
+  console.log({ filteredArray });
 
   for (let movie of filteredArray) {
     myWatchlistHtml += ` <div class="container card watchlist-card">
@@ -63,18 +65,20 @@ function renderMyWatchlist() {
   watchlistCard.innerHTML = myWatchlistHtml;
 }
 
-function handleRemove(id) {
+function handleRemove(btn) {
   let myWatchlistHtml = "";
   //! instead of using localStorage.removeItem I will filter the filteredArray to keep all movies in the filteredArray EXCEPT the movie that the user clicked on
-  filteredArray = filteredArray.filter((movie) => movie.imdbID !== id.id);
+  filteredArray = filteredArray.filter((movie) => movie.imdbID !== btn.id);
   //console.log(filteredArray);
 
   if (filteredArray.length < 1) {
     localStorage.clear();
     addSearchFound.style.display = "flex";
+  } else {
+    // after removing the movie from the filteredArray update the localStorage with the new filteredArray
+    localStorage.setItem("myWatchlistMovies", JSON.stringify(filteredArray));
   }
 
-  //   localStorage.setItem("myWatchlistMovies", JSON.stringify(moviesArray));
   for (let movie of filteredArray) {
     myWatchlistHtml += ` <div class="container card watchlist-card">
         <img src=${movie.Poster} alt="cover of${movie.Title}"  class="poster"/>
