@@ -53,6 +53,7 @@ async function renderMovies() {
     const data = await res.json();
 
     movieIdDetails.push(data);
+    console.log({ movieIdDetails });
 
     //console.log(movieIdDetails);
 
@@ -80,38 +81,53 @@ async function renderMovies() {
   cards.innerHTML = htmlStr;
 }
 
+//! MAYBE THIS WILL FIX MY PROBLEM?????  BUT WHERE CAN I PUT IT?
+// movieObject = JSON.parse(localStorage.getItem("myWatchlistMovies"));
+// filteredArray = [...movieObject];
+// console.log({ movieObject, filteredArray });
+
+// renamed the param to btn instead of id, as what is return is a button element
 function handleAddBtn(btn) {
-  //console.log(id.id);
-  //console.log(movieIdDetails);
-  // console.log(filteredArray);
-  //! so my problems were all about checking if there are previous movies in the filteredArray/my watchlist
-  //so we must getItem from localStorage if there is any movies there or if not just get an empty array []
+  // get the previously stored movies or an empty array
   const previousMovies = JSON.parse(
-    localStorage.getItem("myWatchlistMovies") || []
+    localStorage.getItem("myWatchlistMovies") || "[]"
   );
   filteredArray = previousMovies;
 
-  //use .map instead of .filter
+  // use map method instead of reduce method
   movieIdDetails.map((movie) => {
-    //so that if the user clicks the add btn twice for 1 movie we don't get duplicates BUT FIRST WE MUST CHECK IF THE MOVIE EXISTS IN MY WATCHLIST
-    const existInWatchlist = filteredArray.find(
-      (movie) => movie?.imdbID === btn.id
-    );
-    //? The ?. is the optional chaining operator, which ensures that if movie is null or undefined, the code won't throw an error, and it will just return undefined instead of trying to access imdbID on a null or undefined value.
+    //so that if the user clicks the add btn twice for 1 movie we don't get duplicates
+    // and I want the last movie the user clicks on to appear at the top
 
-    //if it does exist in my watchlist remove it from the filteredArray
+    /**
+     * In other to check for duplicates
+     * First check if the movie exists in watchlist
+     */
+    const existInWatchlist = filteredArray.find(
+      (filteredMovie) => filteredMovie?.imdbID === btn.id
+    );
+
+    // if it exist, remove it from the array
     if (existInWatchlist) {
-      filteredArray = filteredArray.filter((movie) => movie?.imdbID !== btn.id);
+      filteredArray = filteredArray.filter(
+        (filteredMovie) => filteredMovie?.imdbID !== btn.id
+      );
     }
 
-    //then add the movie
-    // and I want the last movie the user clicks on to appear at the top
+    // then add the movie as usual
     if (movie.imdbID === btn.id) {
       filteredArray.unshift(movie);
       //console.log(filteredArray);
-
       localStorage.setItem("myWatchlistMovies", JSON.stringify(filteredArray));
     }
   });
-  //console.log(filteredArray);
+  console.log(filteredArray);
 }
+
+//? ISSUES TO BE FIXED...
+//! if a user goes from My watchlist back to search - searches for something and adds it to my watchlist it doesn't retain any of the past movies they saved - it's like it starts a new filteredArray - and yet I set the array with localStorage
+//? yet if the user just moves from my watchlist to the search page WITHOUT searching a new movie and adding it to the my watchlist it retains the saved/added movies so you would think it has to do with the user inputting in the input field
+//! BUT if the user searches for something that is not found they get the: search not found message... and if they go back to my watchlist it HAS retained the past saved/added movies
+//? which means it is not removing the saved movies when the user types into the input field or else it would remove them even when we search for something which is not found
+//? SO MAYBE IT HAS TO DO WITH THE ADD BTN FUNCTION
+//! it's a head scratcher.. for MY tiny little brain anyhow :)
