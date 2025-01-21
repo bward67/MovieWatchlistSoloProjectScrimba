@@ -63,18 +63,17 @@ function renderMyWatchlist() {
   watchlistCard.innerHTML = myWatchlistHtml;
 }
 
-function handleRemove(id) {
+function handleRemove(btn) {
   let myWatchlistHtml = "";
   //! instead of using localStorage.removeItem I will filter the filteredArray to keep all movies in the filteredArray EXCEPT the movie that the user clicked on
-  filteredArray = filteredArray.filter((movie) => movie.imdbID !== id.id);
-  //console.log(filteredArray);
+  filteredArray = filteredArray.filter((movie) => movie?.imdbID !== btn.id);
+  console.log(filteredArray);
 
   if (filteredArray.length < 1) {
     localStorage.clear();
     addSearchFound.style.display = "flex";
   }
 
-  //   localStorage.setItem("myWatchlistMovies", JSON.stringify(moviesArray));
   for (let movie of filteredArray) {
     myWatchlistHtml += ` <div class="container card watchlist-card">
         <img src=${movie.Poster} alt="cover of${movie.Title}"  class="poster"/>

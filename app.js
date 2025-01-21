@@ -87,7 +87,7 @@ function handleAddBtn(btn) {
   //! so my problems were all about checking if there are previous movies in the filteredArray/my watchlist
   //so we must getItem from localStorage if there is any movies there or if not just get an empty array []
   const previousMovies = JSON.parse(
-    localStorage.getItem("myWatchlistMovies") || []
+    localStorage.getItem("myWatchlistMovies") || "[]"
   );
   filteredArray = previousMovies;
 
@@ -97,7 +97,6 @@ function handleAddBtn(btn) {
     const existInWatchlist = filteredArray.find(
       (movie) => movie?.imdbID === btn.id
     );
-    console.log(existInWatchlist);
 
     //? The ?. is the optional chaining operator, which ensures that if movie is null or undefined, the code won't throw an error, and it will just return undefined instead of trying to access imdbID on a null or undefined value.
 
