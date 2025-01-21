@@ -4,7 +4,7 @@ const noSearchFound = document.getElementById("no-search-found");
 
 let movieArray = [];
 let movieIdDetails = [];
-let myMovies = [];
+let filteredArray = [];
 
 //!   ---------- EVENT LISTENERS ----------
 
@@ -89,27 +89,29 @@ function handleAddBtn(btn) {
   const previousMovies = JSON.parse(
     localStorage.getItem("myWatchlistMovies") || "[]"
   );
-  myMovies = previousMovies;
+  filteredArray = previousMovies;
 
   //use .map instead of .filter
   movieIdDetails.map((movie) => {
     //so that if the user clicks the add btn twice for 1 movie we don't get duplicates BUT FIRST WE MUST CHECK IF THE MOVIE EXISTS IN MY WATCHLIST
-    const existInWatchlist = myMovies.find((movie) => movie?.imdbID === btn.id);
+    const existInWatchlist = filteredArray.find(
+      (movie) => movie?.imdbID === btn.id
+    );
 
     //? The ?. is the optional chaining operator, which ensures that if movie is null or undefined, the code won't throw an error, and it will just return undefined instead of trying to access imdbID on a null or undefined value.
 
     //if it does exist in my watchlist remove it from the filteredArray
     if (existInWatchlist) {
-      myMovies = myMovies.filter((movie) => movie?.imdbID !== btn.id);
+      filteredArray = filteredArray.filter((movie) => movie?.imdbID !== btn.id);
     }
 
     //then add the movie
     // and I want the last movie the user clicks on to appear at the top
     if (movie.imdbID === btn.id) {
-      myMovies.unshift(movie);
+      filteredArray.unshift(movie);
       //console.log(filteredArray);
 
-      localStorage.setItem("myWatchlistMovies", JSON.stringify(myMovies));
+      localStorage.setItem("myWatchlistMovies", JSON.stringify(filteredArray));
     }
   });
   //console.log(filteredArray);

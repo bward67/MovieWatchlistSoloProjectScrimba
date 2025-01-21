@@ -2,7 +2,7 @@ const watchlistCard = document.getElementById("watchlist-card");
 const addSearchFound = document.getElementById("add-search-found");
 const addSearchBtn = document.getElementById("add-icon-search");
 
-let myMovies = [];
+let filteredArray = [];
 
 //!  ------------  EVENT LISTENERS  ------------
 document.addEventListener("DOMContentLoaded", function () {
@@ -19,7 +19,7 @@ addSearchBtn.addEventListener("click", function () {
 
 //!  ------------  FUNCTIONS  ------------
 function renderOrNot() {
-  if (myMovies.length > 0) {
+  if (filteredArray.length > 0) {
     // console.log("show us the movies!");
     // console.log(filteredArray);
     renderMyWatchlist();
@@ -33,10 +33,10 @@ function renderMyWatchlist() {
 
   //! I think this may be where the problem is as it should be an array and NOT an object which comes back from localStorage
   movieObject = JSON.parse(localStorage.getItem("myWatchlistMovies"));
-  myMovies = [...movieObject];
-  console.log({ movieObject, myMovies });
+  filteredArray = [...movieObject];
+  console.log({ movieObject, filteredArray });
 
-  for (let movie of myMovies) {
+  for (let movie of filteredArray) {
     myWatchlistHtml += ` <div class="container card watchlist-card">
         <img src=${movie.Poster} alt="cover of${movie.Title}"  class="poster"/>
         <div class="movie-content">
@@ -66,15 +66,15 @@ function renderMyWatchlist() {
 function handleRemove(btn) {
   let myWatchlistHtml = "";
   //! instead of using localStorage.removeItem I will filter the filteredArray to keep all movies in the filteredArray EXCEPT the movie that the user clicked on
-  myMovies = myMovies.filter((movie) => movie?.imdbID !== btn.id);
-  console.log(myMovies);
+  filteredArray = filteredArray.filter((movie) => movie?.imdbID !== btn.id);
+  console.log(filteredArray);
 
-  if (myMovies.length < 1) {
+  if (filteredArray.length < 1) {
     localStorage.clear();
     addSearchFound.style.display = "flex";
   }
 
-  for (let movie of myMovies) {
+  for (let movie of filteredArray) {
     myWatchlistHtml += ` <div class="container card watchlist-card">
         <img src=${movie.Poster} alt="cover of${movie.Title}"  class="poster"/>
         <div class="movie-content">
@@ -99,9 +99,6 @@ function handleRemove(btn) {
       </div>`;
   }
   watchlistCard.innerHTML = myWatchlistHtml;
-
-  //! because I modified myMovies I must write the new value of myMovies to localStorage
-  localStorage.setItem("myWatchlistMovies", JSON.stringify(myMovies));
   //   console.log(id.id);
   //   console.log("You clicked Remove btn");
 }
